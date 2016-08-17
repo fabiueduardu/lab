@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -44,7 +45,6 @@ namespace JSpank.Test
             using (var conn = new SqlConnection(this.ConnectionString))
             {
                 conn.Open();
-
                 foreach (var query in queries)
                     using (var command = new SqlCommand(query, conn))
                         command.ExecuteNonQuery();
@@ -60,6 +60,29 @@ namespace JSpank.Test
                 foreach (var query in queries)
                     using (var command = new SqlCommand(query, conn))
                         yield return command.ExecuteScalar();
+            }
+        }
+
+        protected IEnumerable<IDictionary<string, object>> OnReader(string query)
+        {
+            using (var conn = new SqlConnection(this.ConnectionString))
+            {
+                conn.Open();
+                IDictionary<string, object> columns = null;
+                using (var command = new SqlCommand(query, conn))
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        columns = new Dictionary<string, object>();
+                        for (var i = 0; i < reader.FieldCount; i++)
+                            columns.Add(reader.GetName(i), reader[i]);
+
+                        yield return columns;
+                    }
+                }
+
+                conn.Close();
             }
         }
 
@@ -96,6 +119,13 @@ namespace JSpank.Test
 
             // Step 4: Assign the Context
             HttpContext.Current = httpContext;
+        }
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            //Change data directory if necessary
+            //  AppDomain.CurrentDomain.SetData("DataDirectory", System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\Resources"));
         }
     }
 }

@@ -8,30 +8,30 @@ namespace JSpank.Test
     public class DbTest : BaseTest
     {
         [TestMethod]
-        public void HelloWorld()
+        public void SelectGetDate()
         {
-            for (var i = 0; i < 1; i++)
-            {
-                var result = base.OnDbScalar(new string[] { string.Format("select 'HelloWorld on db {0}'", i) }).First();
-                Console.WriteLine(result);
-            }
+            var result = base.OnDbScalar(new string[] { "select getdate()" }).First();
+            Console.WriteLine(result);
+        }
 
-            var resultdt = base.OnDbScalar(new string[] { "select getdate()" }).First();
-            Console.WriteLine(resultdt);
+        [TestMethod]
+        public void SelectTables()
+        {
+            var result = base.OnReader("select * from sys.tables");
+            foreach (var item in result)
+                Console.WriteLine("db name: {0}", item["name"]);
         }
 
         [TestInitialize]
         public void _TestInitialize()
         {
-            var result = base.OnDbScalar(new string[] { "select '_TestInitialize on db '" }).First();
-            Console.WriteLine(result);
+            if (!base.OnReader("SELECT * FROM sys.tables WHERE name = 'DbTest'").Any())
+                base.OnDb(new string[] { "CREATE TABLE DbTest(Id INT IDENTITY(1,1) PRIMARY KEY, Name VARCHAR(100))" });
         }
 
         [TestCleanup]
         public void _TestCleanup()
         {
-            var result = base.OnDbScalar(new string[] { "select '_TestCleanup on db '" }).First();
-            Console.WriteLine(result);
         }
     }
 }
