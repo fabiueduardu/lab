@@ -21,11 +21,16 @@ namespace JSpank.Test.Helpers.Generics
             if (!string.IsNullOrEmpty(date))
             {
                 if (date.Length <= 10)
-                    date += string.Format(" {0:00}:{1:00}:{2:00}", dateNow.Hour, dateNow.Minute, dateNow.Second);
+                {
+                    dateNow = ToBrazilianDate(new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, dateNow.Hour, dateNow.Minute, dateNow.Second, dateNow.Millisecond));
+                    date += string.Format(" {0:00}:{1:00}:{2:00}.{3:000}", dateNow.Hour, dateNow.Minute, dateNow.Second, dateNow.Millisecond);
+                }
 
-                if (!DateTime.TryParseExact(date, "dd/MM/yyyy HH:mm:ss", null, System.Globalization.DateTimeStyles.None, out dateNow))
+                if (!DateTime.TryParseExact(date, "dd/MM/yyyy HH:mm:ss.fff", null, System.Globalization.DateTimeStyles.None, out dateNow))
                     dateNow = DateTime.Now;
             }
+            else
+                dateNow = ToBrazilianDate(new DateTime(dateNow.Year, dateNow.Month, dateNow.Day, dateNow.Hour, dateNow.Minute, dateNow.Second, dateNow.Millisecond));
 
             return dateNow;
         }

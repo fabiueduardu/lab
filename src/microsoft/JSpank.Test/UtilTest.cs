@@ -51,7 +51,7 @@ namespace JSpank.Test
             var birth = DateTime.Now;
             var to = DateTime.Now.AddDays(1);
             Assert.AreEqual(DateAndTime.Age(birth, to), 0);
-            Assert.AreEqual(DateAndTime.Age(birth, to , out days), 0);
+            Assert.AreEqual(DateAndTime.Age(birth, to, out days), 0);
             Assert.AreEqual(days, 1);
 
             to = DateTime.Now.AddYears(1);
@@ -90,6 +90,33 @@ namespace JSpank.Test
 
             result = TryCast<int>(null);
             Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void GetNumbers()
+        {
+            var result = ValueValidate.GetNumbers("123456-6");
+            Assert.IsTrue(int.Parse(result) > 0);
+        }
+
+        [TestMethod]
+        public void GetNumbersT_Decimal()
+        {
+            var result = ValueValidate.GetNumbers<decimal>("2");
+            Assert.AreEqual(result, 2);
+
+            result = ValueValidate.GetNumbers<decimal>("-2");
+            Assert.AreEqual(result, 2);
+        }
+
+        [TestMethod]
+        public void CPFGenerate_Get()
+        {
+            var result = CPFGenerate.Get;
+            Assert.IsTrue(result > 0);
+
+            var result2 = CPFValidate.IsValid(result.ToString());
+            Assert.IsTrue(result2);
         }
 
         T TryCast<T>(object obj)

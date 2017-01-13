@@ -30,9 +30,17 @@ namespace JSpank.Test
             }
         }
 
+        protected string KeyAll
+        {
+            get
+            {
+                return Guid.NewGuid().ToString();
+            }
+        }
+
         protected string Key(int length = 5)
         {
-            return Guid.NewGuid().ToString().Substring(0, length);
+            return KeyAll.Substring(0, length);
         }
 
         protected string ClearStringWithRegex(string value)
