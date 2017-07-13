@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>jquery.favorite</title>    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">    
+    <style>
+            .active{
+                background: green!important;
+                    }
+            .inactive{
+                 background: #CCC!important;
+            }
+    </style>
+  </head>
+  <body>
+    <h1>Fav</h1>
+    <div class="container">
+    <h2>collection 01</h2>
+        <div class="row">
+                <div data-bind="foreach: collection1">        
+                    <div class="col-sm-6 col-md-3">
+                        <div class="thumbnail">
+                            <div class="caption">
+                                <h3 data-bind="text: text"></h3>
+                              <p><strong>id: </strong><span data-bind="text: value"></span></p>
+                                <p><a href="#" class="btn btn-default" role="button" data-bind="attr: { 'data-favorite-id': value }">00</a></p>
+                            </div>
+                        </div>
+                    </div>     
+                </div>
+         </div>
+         <button class="btn btn-default" data-bind="click: collection1_add">add</button>
+          </hr>          
+          <h2>collection 02</h2>
+          <div class="row">
+                            <div data-bind="foreach: collection2">        
+                                <div class="col-sm-6 col-md-3">
+                                    <div class="thumbnail">
+                                        <div class="caption">
+                                            <h3 data-bind="text: text"></h3>
+                                        <p><strong>id: </strong><span data-bind="text: value"></span></p>
+                                            <p><a href="#" class="btn btn-default" role="button" data-bind="attr: { 'data-favorite-collection2-id': value }">00</a></p>
+                                        </div>
+                                    </div>
+                                </div>     
+                            </div>
+            </div>
+            <button class="btn btn-default" data-bind="click: collection2_add">add</button>                                    
+        </div>
+    </div>   
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js" ></script>
+    <script src="jquery.favorite.js" type="application/javascript"></script>
+    <script type="application/javascript">
+        var $fav_collection1= $('[data-favorite-id]').favorite({
+            serviceUrlGet: 'get.json',
+            serviceUrlPost: 'post.json',
+            serviceUrlPostRemove: 'post_remove.json',
+            startGet: true
+        });
+
+      
+        $('[data-favorite-collection2-id]').favorite({
+            serviceUrlGet: 'get_collection_2.json',
+            serviceUrlPost: 'post.json',
+            serviceUrlPostRemove: 'post_remove.json',
+            startGet: true
+        });       
+
+        var koModel = function(){
+            var total = 4;
+            var self = this;
+            self.collection1 = ko.observableArray();
+            self.collection2 = ko.observableArray();
+
+            self.add = function(collection) {     
+                var i = collection().length+1;          
+                 collection.push({value:i, text: 'Item '+ i});
+            };
+            self.collection1_add = function() {
+                self.add(self.collection1);
+                $fav_collection1.doGet();
+            };
+            self.collection2_add = function() {self.add(self.collection2);};
+
+            for(i = 1;i<=total;i++)
+                {
+                    self.collection1.push({value:i, text: 'Item '+ i});
+                    self.collection2.push({value:i, text: 'Item '+ i});
+                }
+        }
+    
+        var model = new koModel();
+        ko.applyBindings(model);
+    </script>
+  </body>
+</html>
