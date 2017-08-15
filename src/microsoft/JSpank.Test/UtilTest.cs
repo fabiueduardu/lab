@@ -6,6 +6,7 @@ using JSpank.Test.Helpers.Data;
 using JSpank.Test.Helpers.Generics;
 using System;
 using JSpank.Test.Helpers.Validate;
+using System.Text.RegularExpressions;
 
 namespace JSpank.Test
 {
@@ -119,6 +120,18 @@ namespace JSpank.Test
             Assert.IsTrue(result2);
         }
 
+        [TestMethod]
+        public void Regex_EqualEqual()
+        {
+            const string value = "true";
+
+            Assert.IsTrue(Regex.IsMatch(value , "true", RegexOptions.IgnoreCase));
+            Assert.IsFalse(Regex.IsMatch(value, "Trues", RegexOptions.IgnoreCase));
+            //Assert.IsTrue(Regex.IsMatch(value, "true", RegexOptions.IgnoreCase));           
+
+        }
+
+   
         T TryCast<T>(object obj)
         {
             if (obj is T)
