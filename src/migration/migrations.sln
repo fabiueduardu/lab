@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.00-doc", "1.00-doc", "{7B
 		readme.txt = readme.txt
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Migration.MySQL", "Migration.MySQL\Migration.MySQL.csproj", "{D8C521DD-7C9B-4FA9-AF31-2CC921C8A742}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{52D02886-C0AD-43EC-B6E9-56A6057F2F51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52D02886-C0AD-43EC-B6E9-56A6057F2F51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52D02886-C0AD-43EC-B6E9-56A6057F2F51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8C521DD-7C9B-4FA9-AF31-2CC921C8A742}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8C521DD-7C9B-4FA9-AF31-2CC921C8A742}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8C521DD-7C9B-4FA9-AF31-2CC921C8A742}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8C521DD-7C9B-4FA9-AF31-2CC921C8A742}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,8 +2,9 @@
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
-namespace Migration.SQLServer.Context
+namespace Migration.MySQL.Context
 {
+    [DbConfigurationType(typeof(MySql.Data.Entity.MySqlEFConfiguration))]
     public class MigrationContext : DbContext
     {
         public DbSet<Car> Cars { get; set; }
@@ -11,7 +12,7 @@ namespace Migration.SQLServer.Context
         public DbSet<CarTrip> CarTrips { get; set; }
 
         public MigrationContext()
-                     : base("SqlServerDb")
+                     : base("MySQLDb")
         {
 
         }
@@ -25,5 +26,4 @@ namespace Migration.SQLServer.Context
             base.OnModelCreating(modelBuilder);
         }
     }
-
 }

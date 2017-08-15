@@ -1,22 +1,12 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Migration.Core.Repositories;
-using Migration.SQLServer.Repositories;
 
-namespace Migration.UnitTests.Migration.SQLServer
+namespace Migration.UnitTests
 {
-    [TestClass]
-    public class ICarRepositoryTests : BaseTests
+    public abstract class CarRepositoryBaseTests : BaseTests
     {
-        ICarRepository CarRepository
-        {
-            get
-            {
-
-                return new CarRepository();
-            }
-        }
+        public abstract ICarRepository CarRepository { get; }
 
         [TestMethod]
         public void Add()
@@ -31,7 +21,7 @@ namespace Migration.UnitTests.Migration.SQLServer
             this.Add_To(total);
         }
 
-        [TestMethod]
+        //[TestMethod]
         public void Add_1000()
         {
             int total = 1000;
