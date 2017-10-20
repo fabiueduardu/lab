@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace HelloWorld
+namespace HelloWorldNetStandard
 {
     public class HelloWorldService
     {
         public void Hello(string value)
         {
-            Console.WriteLine("Hello: {0}", value);
+            Console.WriteLine("Hello: {0}  ", value);
         }
     }
 }

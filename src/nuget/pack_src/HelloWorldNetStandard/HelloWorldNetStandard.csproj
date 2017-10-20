@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net45</TargetFrameworks>
+    <PackageId>HelloWorldNetStandard</PackageId>
+    <PackageVersion>1.0.0</PackageVersion>
+    <Authors>fuchoa</Authors>
+    <Description>Description text</Description>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes>First release</PackageReleaseNotes>
+    <Copyright>Copyright 2017 (c). All rights reserved.</Copyright>
+    <PackageTags>test,helloworld</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <Target Name="CopyPackage" AfterTargets="Pack">
+    <Copy SourceFiles="$(OutputPath)\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="$(SolutionDir)..\pack\" />
+  </Target>
+
+  <ItemGroup>
+    <Content Include="File1.txt">
+      <Pack>true</Pack>
+      <PackagePath>contentFiles\any\any\File1.txt</PackagePath>
+    </Content>
+    <Content Include="Content\**">
+      <Pack>true</Pack>
+      <PackagePath>contentFiles\any\any\Content\</PackagePath>
+    </Content>    
+  </ItemGroup>
+
+
+</Project>
