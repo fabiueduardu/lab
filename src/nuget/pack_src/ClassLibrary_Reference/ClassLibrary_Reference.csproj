@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net45</TargetFrameworks>
+  </PropertyGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy /Y &quot;$(TargetDir)$(ProjectName).dll&quot; &quot;$(SolutionDir)References\$(ProjectName).dll&quot;" />
+  </Target>
+  <ItemGroup>
+    <ProjectReference Include="..\ClassLibrary_Base\ClassLibrary_Base.csproj" />
+  </ItemGroup>
+</Project>

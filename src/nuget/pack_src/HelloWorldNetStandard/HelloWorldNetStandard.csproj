@@ -12,7 +12,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
@@ -31,5 +31,18 @@
     </Content>    
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ClassLibrary_ReferencePackage\ClassLibrary_ReferencePackage.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="ClassLibrary_Reference" Version="1.0.0">
+      <HintPath>..\References\ClassLibrary_Reference.dll</HintPath>
+    </Reference>
+    <Content Include="$(OutputPath)\$(TargetFrameworks)\ClassLibrary_Reference.dll">
+      <Pack>true</Pack>
+      <PackagePath>Lib\$(TargetFrameworks)\ClassLibrary_Reference.dll</PackagePath>
+    </Content>
+  </ItemGroup>
 
 </Project>

@@ -1,12 +1,15 @@
-﻿namespace ConsoleApp
+﻿using System;
+
+namespace ConsoleApp
 {
     class Program
     {
         static void Main(string[] args)
         {
-            //  var helloWorldService = new HelloWorldService();
-            //  helloWorldService.Hello("test");
-            //Console.ReadKey();            
+
+            Console.WriteLine("ConsoleApp: {0:dd/MM HH:mm:ss}", DateTime.Now);
+            new HelloWorldNetStandard.HelloWorldService().Hello("testProgram");
+            Console.ReadKey();
         }
     }
 }
