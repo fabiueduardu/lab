@@ -12,7 +12,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug|Release'">
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
@@ -41,7 +41,7 @@
     </Reference>
     <Content Include="$(OutputPath)\$(TargetFrameworks)\ClassLibrary_Reference.dll">
       <Pack>true</Pack>
-      <PackagePath>Lib\$(TargetFrameworks)\ClassLibrary_Reference.dll</PackagePath>
+      <PackagePath>Lib\$(TargetFrameworks)\</PackagePath>
     </Content>
   </ItemGroup>
 
