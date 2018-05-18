@@ -1,0 +1,30 @@
+﻿<Window x:Class="VersionOrganizeHelper.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VersionOrganizeHelper"
+        mc:Ignorable="d"
+        Title="Version Organizer " Height="605.085" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="203*"/>
+            <ColumnDefinition Width="229*"/>
+            <ColumnDefinition Width="360*"/>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="txtfolders" HorizontalAlignment="Left" Height="70" Margin="10,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="659" Grid.ColumnSpan="3"/>
+        <Label Content="Folders to read (use ; to separate)" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="193"/>
+        <ListBox x:Name="lbxprojects" HorizontalAlignment="Left" Height="360" Margin="10,204,0,0" VerticalAlignment="Top" Width="772" Grid.ColumnSpan="3" SelectionMode="Multiple"/>
+        <Button x:Name="btnReadFolders" Content="Read" Grid.Column="2" HorizontalAlignment="Left" Margin="242,42,0,0" VerticalAlignment="Top" Width="108" Height="70" Click="btnReadFolders_Click"/>
+        <TextBox x:Name="txtVersion" HorizontalAlignment="Left" Height="23" Margin="10,148,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="133"/>
+        <Label Content="Version" HorizontalAlignment="Left" Margin="10,117,0,0" VerticalAlignment="Top" Width="193"/>
+        <Button x:Name="btnChange" Content="Change" HorizontalAlignment="Left" Margin="198,148,0,0" VerticalAlignment="Top" Width="75" Grid.ColumnSpan="2" Height="23" Click="btnChange_Click"/>
+        <CheckBox x:Name="cbkVersion1" Content="X.0.0" Grid.Column="2" HorizontalAlignment="Left" Margin="192,117,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="cbkVersion2" Content="0.X.0" Grid.Column="2" HorizontalAlignment="Left" Margin="192,132,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="cbkVersion3" Content="0.0.X" Grid.Column="2" HorizontalAlignment="Left" Margin="192,148,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnVersionUpdate" Content="Update" Grid.Column="2" HorizontalAlignment="Left" Margin="242,117,0,0" VerticalAlignment="Top" Width="108" Height="46" Click="btnVersionUpdate_Click"/>
+        <CheckBox x:Name="cbxListAll" Content="All" HorizontalAlignment="Left" Margin="148,156,0,0" VerticalAlignment="Top" Checked="cbxListAll_Checked"  Unchecked="cbxListAll_Unchecked" Width="45"/>
+        <Label x:Name="txtResult" Content="" Margin="10,173,10,0" VerticalAlignment="Top" Grid.ColumnSpan="3" HorizontalAlignment="Center" FontStyle="Italic"/>
+
+    </Grid>
+</Window>
