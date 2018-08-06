@@ -2,7 +2,7 @@
 
 namespace JSpank.Test.Helpers.Data
 {
-    public class CPFGenerate
+    public sealed class CPFGenerate
     {
         public static decimal Get
         {

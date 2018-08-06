@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using JSpank.Test.Helpers.Providers;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -94,7 +95,13 @@ namespace JSpank.Test
             }
         }
 
-        protected void OnWebContext()
+        protected void OnWebContext(string login = null)
+        {
+            HttpContext httpContext = null;
+            this.OnWebContext(login, ref httpContext);
+        }
+
+        protected void OnWebContext(string login, ref HttpContext httpContext)
         {
             // We need to setup the Current HTTP Context as follows:            
 
@@ -105,7 +112,7 @@ namespace JSpank.Test
             var httpResponce = new HttpResponse(new StringWriter());
 
             // Step 3: Setup the Http Context
-            var httpContext = new HttpContext(httpRequest, httpResponce);
+            httpContext = new HttpContext(httpRequest, httpResponce);
             var sessionContainer =
                 new HttpSessionStateContainer(this.Key(),
                                                new SessionStateItemCollection(),
@@ -126,6 +133,9 @@ namespace JSpank.Test
                 .Invoke(new object[] { sessionContainer });
 
             // Step 4: Assign the Context
+            if (!string.IsNullOrEmpty(login))
+                httpContext.User = new IPrincipalModel(login);
+
             HttpContext.Current = httpContext;
         }
 

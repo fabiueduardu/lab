@@ -121,6 +121,16 @@ namespace JSpank.Test
         }
 
         [TestMethod]
+        public void CNPJGenerate_Get()
+        {
+            var result = CNPJGenerate.Get;
+            Assert.IsTrue(result > 0);
+
+            var result2 = CNPJValidate.IsValid(result.ToString());
+            Assert.IsTrue(result2);
+        }
+
+        [TestMethod]
         public void Regex_EqualEqual()
         {
             const string value = "true";

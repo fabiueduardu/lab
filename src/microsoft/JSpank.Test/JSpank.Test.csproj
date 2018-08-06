@@ -62,12 +62,15 @@
   <ItemGroup>
     <Compile Include="BaseTest.cs" />
     <Compile Include="DbTest.cs" />
+    <Compile Include="Helpers\Data\CNPJGenerate.cs" />
     <Compile Include="Helpers\Data\CPFGenerate.cs" />
     <Compile Include="Helpers\Data\Db.cs" />
     <Compile Include="Helpers\Extensions\Base64Extension.cs" />
     <Compile Include="Helpers\Extensions\CollectionExtension.cs" />
     <Compile Include="Helpers\Generics\DateAndTime.cs" />
     <Compile Include="Helpers\MainApp\Program.cs" />
+    <Compile Include="Helpers\Providers\ClaimsIdentityModel.cs" />
+    <Compile Include="Helpers\Providers\IPrincipalModel.cs" />
     <Compile Include="Helpers\Validate\CNPJValidate.cs" />
     <Compile Include="Helpers\Validate\CPFValidate.cs" />
     <Compile Include="Helpers\Validate\ValueValidate.cs" />
