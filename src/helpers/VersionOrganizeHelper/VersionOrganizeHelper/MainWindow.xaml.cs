@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Configuration;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Xml;
 using VersionOrganizeHelper.Models;
@@ -16,6 +17,7 @@ namespace VersionOrganizeHelper
         private const char FOLDERS_COMMA = ';';
         private const char VERSION_COMMA = '.';
         private const string SEARCH_PATTERN_CSPROJ = "*.csproj";
+        private const string SEARCH_PATTERN_ALL = "*.*";
         private const string RESULT_TEXT = "{0} file(s) affected";
         private string DefaultSearchFolders
         {
@@ -24,6 +26,23 @@ namespace VersionOrganizeHelper
                 return ConfigurationManager.AppSettings["DefaultSearchFolders"] as string;
             }
         }
+        private string[] DefaultSearchFilesOnHistory
+        {
+            get
+            {
+                var values = ConfigurationManager.AppSettings["DefaultSearchFilesOnHistory"] as string;
+                return string.IsNullOrEmpty(values) ? new string[] { } : values.Split(FOLDERS_COMMA);
+            }
+        }
+        private string[] DefaultSearchFilesOnHistoryFoldersToIgnore
+        {
+            get
+            {
+                var values = ConfigurationManager.AppSettings["DefaultSearchFilesOnHistoryFoldersToIgnore"] as string;
+                return string.IsNullOrEmpty(values) ? new string[] { } : values.Split(FOLDERS_COMMA);
+            }
+        }
+
 
         private IDictionary<string, FileModel> csprojCollection;
         private IDictionary<string, FileModel> CSPROJCollection
@@ -59,7 +78,7 @@ namespace VersionOrganizeHelper
         {
             var values = this.txtfolders.Text.Split(FOLDERS_COMMA);
             foreach (var folder in values)
-                this.ReadProject(folder);
+                this.ReadProject(folder.Trim());
         }
 
         private void ReadProject(string path, bool clearList = true)
@@ -75,20 +94,41 @@ namespace VersionOrganizeHelper
             if (!directoryInfo.Exists)
                 return;
 
+            var items = new Collection<FileModel>();
             foreach (var file in directoryInfo.GetFiles(SEARCH_PATTERN_CSPROJ, SearchOption.AllDirectories))
             {
                 var value = new FileModel
                 {
                     FullName = file.FullName,
                     Name = file.Name,
-                    XmlDocument = this.LoadXml(file.FullName)
+                    XmlDocument = this.LoadXml(file.FullName),
                 };
 
-                this.lbxprojects.Items.Add(value);
+                var historyFiles = file.Directory.GetFiles(SEARCH_PATTERN_ALL, SearchOption.AllDirectories);
+                foreach (var item in historyFiles)
+                {
+                    if (!DefaultSearchFilesOnHistory.Contains(item.Extension.ToLower()))
+                        continue;
+
+                    if (DefaultSearchFilesOnHistoryFoldersToIgnore.Contains(item.Directory.Name.ToLower()))
+                        continue;
+
+                    item.Refresh();
+                    if (item.LastWriteTime > value.LastModifyItemDate)
+                    {
+                        value.LastModifyItem = item.FullName;
+                        value.LastModifyItemDate = item.LastWriteTime;
+                    }
+                }
+
+                items.Add(value);
 
                 if (!this.CSPROJCollection.ContainsKey(value.FullName))
                     this.CSPROJCollection.Add(file.FullName, value);
             }
+
+            foreach (var item in items.OrderBy(a => a.LastModifyItemDate))
+                this.lbxprojects.Items.Add(item);
         }
 
         private XmlDocument LoadXml(string path)

@@ -1,5 +1,7 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Xml;
+using VersionOrganizeHelper.Definitions;
 
 namespace VersionOrganizeHelper.Models
 {
@@ -7,6 +9,10 @@ namespace VersionOrganizeHelper.Models
     {
         public string FullName { get; set; }
         public string Name { get; set; }
+
+        public string LastModifyItem { get; set; }
+        public DateTime LastModifyItemDate { get; set; }
+
         public string Version
         {
             get
@@ -48,7 +54,8 @@ namespace VersionOrganizeHelper.Models
 
         public override string ToString()
         {
-            return string.Format("{0} - Version: {1}", this.Name, this.Version);
+            var lasModify = string.Format("{0} - {1:" + HelperDefinition.DATE_FORMAT_ALL + "}", LastModifyItemDate, LastModifyItem);
+            return string.Format("{0} - Version: {1}  - ({2})", this.Name, this.Version, lasModify);
         }
     }
 }
